@@ -3,11 +3,12 @@ import {
     useEffect,
 } from 'react';
 
-export const User = ({id, name}) => {
+export const User = ({id, name, addToFavourites, isFavourite}) => {
     const [data, setData] = useState({});
     const [isActive, setIsActive] = useState(false);
 
     const handlerClick = () => {
+        addToFavourites(id);
         setIsActive(!isActive);
     };
 
@@ -21,7 +22,7 @@ export const User = ({id, name}) => {
 
 
     return (
-        <li onClick={handlerClick}>
+        <li onClick={handlerClick} style={{color: isFavourite && 'red'}}>
             {name}
             {isActive && (
                 <div>
