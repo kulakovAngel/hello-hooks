@@ -8,6 +8,11 @@ import {
     bool,
     func,
 } from 'prop-types';
+import styled from 'styled-components';
+
+const StyledUser = styled.li`
+    color: ${({isFavourite}) => isFavourite ? 'red' : 'blue'};
+`;
 
 export const User = ({id, name, addToFavourites, isFavourite}) => {
     const [data, setData] = useState({});
@@ -27,14 +32,14 @@ export const User = ({id, name, addToFavourites, isFavourite}) => {
     }, [isActive, id]);
 
     return (
-        <li onClick={handlerClick} style={{color: isFavourite && 'red'}}>
+        <StyledUser onClick={handlerClick} isFavourite={isFavourite}>
             {name}
             {isActive && (
                 <div>
                     {data.email}
                 </div>
             )}
-        </li>
+        </StyledUser>
     )
 };
 
