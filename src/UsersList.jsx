@@ -4,11 +4,14 @@ import {
 } from 'react';
 
 import {User} from './User';
-import {SORT_STATES_} from './consts';
+import {
+    SORT_STATES_,
+    sortStatesValidator,
+} from './consts';
 
 export const UsersList = ({sortBy}) => {
     const [users, setUsers] = useState([]);
-    const [favourites, setFavourites] = useState([]);
+    const [favourites, setFavourites] = useState({});
 
     const handler = () => {
         switch (sortBy) {
@@ -46,9 +49,10 @@ export const UsersList = ({sortBy}) => {
     }, []);
 
     const addToFavourites = id => {
-        const newFavourites = [...favourites];
-        newFavourites.push(id);
-        setFavourites(newFavourites);
+        setFavourites({
+            ...favourites,
+            [id]: true,
+        });
     };
 
     return (
@@ -60,10 +64,18 @@ export const UsersList = ({sortBy}) => {
                         id={user.id}
                         name={user.name}
                         addToFavourites={addToFavourites}
-                        isFavourite={favourites.find(item => item === user.id)}
+                        isFavourite={!!favourites[user.id]}
                     />
                 ))}
             </ul>
         )
     );
+};
+
+UsersList.propTypes = {
+    sortBy: sortStatesValidator,
+};
+
+UsersList.defaultProps = {
+    sortBy: SORT_STATES_.DEFAULT,
 };

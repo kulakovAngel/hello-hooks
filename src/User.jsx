@@ -2,6 +2,12 @@ import {
     useState,
     useEffect,
 } from 'react';
+import {
+    number,
+    string,
+    bool,
+    func,
+} from 'prop-types';
 
 export const User = ({id, name, addToFavourites, isFavourite}) => {
     const [data, setData] = useState({});
@@ -20,7 +26,6 @@ export const User = ({id, name, addToFavourites, isFavourite}) => {
         }
     }, [isActive, id]);
 
-
     return (
         <li onClick={handlerClick} style={{color: isFavourite && 'red'}}>
             {name}
@@ -31,4 +36,15 @@ export const User = ({id, name, addToFavourites, isFavourite}) => {
             )}
         </li>
     )
+};
+
+User.propTypes = {
+    id: number.isRequired,
+    name: string.isRequired,
+    addToFavourites: func.isRequired,
+    isFavourite: bool.isRequired,
+};
+
+User.defaultProps = {
+  isFavourite: false,
 };
